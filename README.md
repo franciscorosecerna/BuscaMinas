@@ -1,4 +1,6 @@
-# 🧨 Buscaminas (Minesweeper) — Clon estilo Google
+# 🧨 Buscaminas (Minesweeper)
+
+**Pages:** [franciscorosecerna.github.io/BuscaMinas](https://franciscorosecerna.github.io/BuscaMinas/)
 
 Este proyecto es una implementación del clásico juego **Buscaminas**
 
