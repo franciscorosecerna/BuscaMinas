@@ -2,17 +2,35 @@ const boardElement = document.getElementById("board");
 const resetButton = document.getElementById("reset-btn");
 const timerElement = document.querySelector(".timer");
 const flagCounterElement = document.querySelector(".flag-counter");
-const ROWS = 10;
-const COLS = 10;
+const playerNameInput = document.getElementById("player-name");
+const resultModal = document.getElementById("result-modal");
+const resultMessage = document.getElementById("result-message");
+const modalRestartButton = document.getElementById("modal-restart");
+const startButton = document.getElementById("start-game");
+const nameWarningModal = document.getElementById("name-warning-modal");
+const ROWS = 8;
+const COLS = 8;
 const MINES_COUNT = 10;
 
 let flagsLeft = MINES_COUNT;
 let timer = null;
 let secondsElapsed = 0;
 let gameStarted = false;
-
 let board = [];
 let minePositions = [];
+
+startButton.addEventListener("click", () => {
+  const playerName = playerNameInput.value.trim();
+
+  if (playerName.length < 3) {
+    nameWarningModal.style.display = "block";
+    return;
+  }
+
+  createBoard();
+  const modal = document.getElementById("startModal");
+  modal.style.display = "none";
+});
 
 function createBoard() {
   secondsElapsed = 0;
@@ -106,10 +124,9 @@ function getNeighbors(row, col) {
 }
 
 function handleLeftClick(e) {
-
   if (!gameStarted) {
-  startTimer();
-  gameStarted = true;
+    startTimer();
+    gameStarted = true;
   }
 
   const cellEl = e.currentTarget;
@@ -147,12 +164,12 @@ function handleRightClick(e) {
     cell.isFlagged = true;
     cell.element.classList.add("flagged");
     flagsLeft--;
-    } else if (cell.isFlagged) {
+  } else if (cell.isFlagged) {
     cell.isFlagged = false;
     cell.element.classList.remove("flagged");
     flagsLeft++;
   }
-updateFlagCounter();
+  updateFlagCounter();
 }
 
 function revealCell(cell) {
@@ -194,11 +211,7 @@ function gameOver(won) {
     }
   }
 
-  if (won) {
-    resetButton.textContent = "😎";
-  } else {
-    resetButton.textContent = "😵";
-  }
+  resetButton.textContent = won ? "😎" : "😵";
 
   for (const row of board) {
     for (const cell of row) {
@@ -208,8 +221,9 @@ function gameOver(won) {
   }
 
   setTimeout(() => {
-    alert(won ? "¡Ganaste! 🎉" : "¡Perdiste! 💥");
-  }, 100);
+    resultMessage.textContent = won ? "¡Ganaste! 🎉" : "¡Perdiste! 💥";
+    resultModal.style.display = "block";
+  }, 200);
 }
 
 function checkWin() {
@@ -243,4 +257,12 @@ function updateTimerDisplay() {
 
 resetButton.addEventListener("click", createBoard);
 
-createBoard();
+
+modalRestartButton.addEventListener("click", () => {
+  resultModal.style.display = "none";
+  createBoard();
+});
+
+document.getElementById("close-name-warning").addEventListener("click", () => {
+  nameWarningModal.style.display = "none";
+});

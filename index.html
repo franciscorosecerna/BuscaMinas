@@ -7,6 +7,32 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <div id="playerInfo"></div>
+  <div id="startModal" class="modal show">
+    <div class="modal-content">
+      <h2>Bienvenido al Buscaminas</h2>
+      <p>Por favor, ingresa tu nombre:</p>
+      <input type="text" id="player-name" placeholder="Nombre (min. 3 letras)" />
+      <button id="start-game">Iniciar juego</button>
+      <p id="nameError" class="error-message"></p>
+    </div>
+  </div>
+
+  <div id="result-modal" class="modal">
+    <div class="modal-content">
+      <p id="result-message"></p>
+      <button id="modal-restart">Jugar de nuevo</button>
+    </div>
+  </div>
+
+  <div id="name-warning-modal" class="modal">
+    <div class="modal-content">
+      <p>Por favor, ingresa tu nombre antes de jugar.</p>
+      <button id="close-name-warning">OK</button>
+    </div>
+  </div>
+
   <div class="container">
     <div class="header">
         <div class="flag-counter">🚩 010</div>
