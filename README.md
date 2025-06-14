@@ -27,3 +27,8 @@ Este proyecto es una implementacion del clasico juego **Buscaminas**, desarrolla
 ├── index.html
 ├── style.css
 └── script.js
+```
+---
+##  Nota
+
+Este proyecto fue desarrollado con fines educativos y recreativos.
