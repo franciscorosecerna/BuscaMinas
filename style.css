@@ -5,12 +5,20 @@
 }
 
 body {
-    background-color: #eeeeee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    height: 100vh;
+  background-image: 
+    url(http://www.transparenttextures.com/patterns/subtle-zebra-3d.png), 
+    linear-gradient(-45deg, #1c262c, #928dab, #414345, #232526);
+  background-size: auto, 400% 400%;
+  background-repeat: repeat, no-repeat;
+  animation: gradientBG 15s ease infinite;
+  color: white;
+  font-family: sans-serif;
+}
+
+@keyframes gradientBG {
+  0% { background-position: left center, 0% 50%; }
+  50% { background-position: left center, 100% 50%; }
+  100% { background-position: left center, 0% 50%; }
 }
 
 input {
@@ -37,15 +45,17 @@ button {
 
 .container {
     align-items: center;
-    background-color: #bdbdbd;
+    background: rgba(30, 30, 30, 0.55);
+    backdrop-filter: blur(6px);
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 0 auto;
+    margin: 2rem auto;
     max-width: 100%;
-    padding: 1rem;
+    padding: 1.5rem;
+    transition: background 0.4s ease;
 }
 
 .header {
@@ -101,37 +111,14 @@ button {
     cursor: default;
 }
 
-.cell.number-1 {
-    color: #1976d2;
-}
-
-.cell.number-2 {
-    color: #388e3c;
-}
-
-.cell.number-3 {
-    color: #d32f2f;
-}
-
-.cell.number-4 {
-    color: #512da8;
-}
-
-.cell.number-5 {
-    color: #795548;
-}
-
-.cell.number-6 {
-    color: #0097a7;
-}
-
-.cell.number-7 {
-    color: #212121;
-}
-
-.cell.number-8 {
-    color: #757575;
-}
+.cell.number-1 { color: #1976d2; }
+.cell.number-2 { color: #388e3c; }
+.cell.number-3 { color: #d32f2f; }
+.cell.number-4 { color: #512da8; }
+.cell.number-5 { color: #795548; }
+.cell.number-6 { color: #0097a7; }
+.cell.number-7 { color: #212121; }
+.cell.number-8 { color: #757575; }
 
 .modal {
     align-items: center;
@@ -152,12 +139,14 @@ button {
 }
 
 .modal-content {
-    background: #f0f0f0;
+    background: rgba(40, 40, 40, 0.85);
+    color: white;
     border-radius: 10px;
     margin: 100px auto;
     padding: 2rem;
     text-align: center;
     width: fit-content;
+    box-shadow: 0 0 10px rgba(0,0,0,0.6);
 }
 
 .error-message {
@@ -179,6 +168,25 @@ button {
     display: none;
     inset: 0;
     position: fixed;
+}
+
+.github-link {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.github-link img {
+    width: 40px;
+    height: 40px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    filter: invert(1);
+    opacity: 0.85;
+}
+
+.github-link img:hover {
+    transform: scale(1.2);
+    opacity: 1;
 }
 
 @media screen and (max-width: 600px) {
