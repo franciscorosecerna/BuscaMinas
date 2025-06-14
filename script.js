@@ -1,295 +1,269 @@
-const boardElement = document.getElementById("board");
-const resetButton = document.getElementById("reset-btn");
-const timerElement = document.querySelector(".timer");
-const flagCounterElement = document.querySelector(".flag-counter");
-const playerNameInput = document.getElementById("player-name");
-const resultModal = document.getElementById("result-modal");
-const resultMessage = document.getElementById("result-message");
-const modalRestartButton = document.getElementById("modal-restart");
-const startButton = document.getElementById("start-game");
-const nameWarningModal = document.getElementById("name-warning-modal");
-const difficultySelect = document.getElementById("difficulty");
-const DIFFICULTY_SETTINGS = {
-  easy:   { rows: 8, cols: 8, mines: 10 },
-  medium: { rows: 12, cols: 12, mines: 25 },
-  hard:   { rows: 16, cols: 16, mines: 40 }
-};
+'use strict';
+var boardElement = document.getElementById('board');
+var resetButton = document.getElementById('reset-btn');
+var startGameButton = document.getElementById('start-game');
+var modalRestart = document.getElementById('modal-restart');
+var difficultySelect = document.getElementById('difficulty');
+var resultModal = document.getElementById('result-modal');
+var resultMessage = document.getElementById('result-message');
+var nameWarningModal = document.getElementById('name-warning-modal');
+var closeNameWarning = document.getElementById('close-name-warning');
+var playerNameInput = document.getElementById('player-name');
+var nameError = document.getElementById('nameError');
+var flagCounter = document.querySelector('.flag-counter');
+var timerElement = document.querySelector('.timer');
+var board = [];
+var revealed = [];
+var flagged = [];
+var size = 8;
+var mineCount = 10;
+var gameStarted = false;
+var gameOver = false;
+var timer;
+var seconds = 0;
 
-let ROWS = 8;
-let COLS = 8;
-let MINES_COUNT = 10;
-let flagsLeft = MINES_COUNT;
-let timer = null;
-let secondsElapsed = 0;
-let gameStarted = false;
-let board = [];
-let minePositions = [];
+function setDifficulty(value) {
+  if (value === 'easy') {
+    size = 8;
+    mineCount = 10;
+  } else if (value === 'medium') {
+    size = 12;
+    mineCount = 25;
+  } else if (value === 'hard') {
+    size = 16;
+    mineCount = 40;
+  }
+}
 
-function createBoard() {
-  const settings = getSelectedDifficultySettings();
-  ROWS = settings.rows;
-  COLS = settings.cols;
-  MINES_COUNT = settings.mines;
+difficultySelect.addEventListener('change', onDifficultyChange);
 
-  secondsElapsed = 0;
-  updateTimerDisplay();
+function onDifficultyChange() {
+  setDifficulty(this.value);
+  resetTimer();
   gameStarted = false;
-  resetButton.textContent = "🙂";
-  board = [];
-  boardElement.innerHTML = "";
-  minePositions = getRandomMinePositions();
-
-  boardElement.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
-  boardElement.style.gridTemplateRows = `repeat(${ROWS}, 1fr)`;
-  for (let row = 0; row < ROWS; row++) {
-    const rowArray = [];
-    for (let col = 0; col < COLS; col++) {
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-      cell.dataset.row = row;
-      cell.dataset.col = col;
-
-      cell.addEventListener("click", handleLeftClick);
-      cell.addEventListener("contextmenu", handleRightClick);
-
-      boardElement.appendChild(cell);
-
-      rowArray.push({
-        element: cell,
-        row,
-        col,
-        isMine: isMine(row, col),
-        isRevealed: false,
-        isFlagged: false,
-        adjacentMines: 0
-      });
-    }
-    board.push(rowArray);
-  }
-
-  flagsLeft = MINES_COUNT;
+  gameOver = false;
+  createBoard();
   updateFlagCounter();
-  calculateAdjacentMines();
-}
-
-function getSelectedDifficultySettings() {
-  const selectedDifficulty = difficultySelect.value;
-  return DIFFICULTY_SETTINGS[selectedDifficulty];
-}
-
-function updateFlagCounter() {
-  flagCounterElement.textContent = `🚩 ${String(flagsLeft).padStart(3, "0")}`;
-}
-
-function getRandomMinePositions() {
-  const positions = new Set();
-
-  while (positions.size < MINES_COUNT) {
-    const pos = Math.floor(Math.random() * ROWS * COLS);
-    positions.add(pos);
-  }
-
-  return [...positions].map(pos => ({
-    row: Math.floor(pos / COLS),
-    col: pos % COLS
-  }));
-}
-
-function isMine(row, col) {
-  return minePositions.some(pos => pos.row === row && pos.col === col);
-}
-
-function calculateAdjacentMines() {
-  for (let row = 0; row < ROWS; row++) {
-    for (let col = 0; col < COLS; col++) {
-      const cell = board[row][col];
-      if (cell.isMine) continue;
-
-      const neighbors = getNeighbors(row, col);
-      cell.adjacentMines = neighbors.filter(n => n.isMine).length;
-    }
-  }
-}
-
-function getNeighbors(row, col) {
-  const neighbors = [];
-  for (let dr = -1; dr <= 1; dr++) {
-    for (let dc = -1; dc <= 1; dc++) {
-      if (dr === 0 && dc === 0) continue;
-
-      const r = row + dr;
-      const c = col + dc;
-
-      if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
-        neighbors.push(board[r][c]);
-      }
-    }
-  }
-  return neighbors;
-}
-
-function handleLeftClick(e) {
-  if (!gameStarted) {
-    startTimer();
-    gameStarted = true;
-  }
-
-  const cellEl = e.currentTarget;
-  const row = parseInt(cellEl.dataset.row);
-  const col = parseInt(cellEl.dataset.col);
-  const cell = board[row][col];
-
-  if (cell.isRevealed || cell.isFlagged) return;
-
-  revealCell(cell);
-
-  if (cell.isMine) {
-    cell.element.classList.add("mine");
-    gameOver(false);
-  } else if (cell.adjacentMines > 0) {
-    cell.element.classList.add(`number-${cell.adjacentMines}`);
-    cell.element.textContent = cell.adjacentMines;
-  } else {
-    revealEmptyCells(row, col);
-  }
-
-  checkWin();
-}
-
-function handleRightClick(e) {
-  e.preventDefault();
-  const cellEl = e.currentTarget;
-  const row = parseInt(cellEl.dataset.row);
-  const col = parseInt(cellEl.dataset.col);
-  const cell = board[row][col];
-
-  if (cell.isRevealed) return;
-
-  if (!cell.isFlagged && flagsLeft > 0) {
-    cell.isFlagged = true;
-    cell.element.classList.add("flagged");
-    flagsLeft--;
-  } else if (cell.isFlagged) {
-    cell.isFlagged = false;
-    cell.element.classList.remove("flagged");
-    flagsLeft++;
-  }
-  updateFlagCounter();
-}
-
-function revealCell(cell) {
-  if (cell.isRevealed) return;
-  cell.isRevealed = true;
-  cell.element.classList.add("revealed");
-}
-
-function revealEmptyCells(row, col) {
-  const queue = [board[row][col]];
-
-  while (queue.length > 0) {
-    const cell = queue.shift();
-    revealCell(cell);
-
-    if (cell.adjacentMines > 0) {
-      cell.element.classList.add(`number-${cell.adjacentMines}`);
-      cell.element.textContent = cell.adjacentMines;
-      continue;
-    }
-
-    const neighbors = getNeighbors(cell.row, cell.col);
-    for (const neighbor of neighbors) {
-      if (!neighbor.isRevealed && !neighbor.isFlagged && !neighbor.isMine) {
-        revealCell(neighbor);
-        queue.push(neighbor);
-      }
-    }
-  }
-}
-
-function gameOver(won) {
-  stopTimer();
-  for (const row of board) {
-    for (const cell of row) {
-      if (cell.isMine && !cell.isRevealed) {
-        cell.element.classList.add("revealed", "mine");
-      }
-    }
-  }
-
-  resetButton.textContent = won ? "😎" : "😵";
-
-  for (const row of board) {
-    for (const cell of row) {
-      cell.element.removeEventListener("click", handleLeftClick);
-      cell.element.removeEventListener("contextmenu", handleRightClick);
-    }
-  }
-
-  setTimeout(() => {
-    resultMessage.textContent = won ? "¡Ganaste! 🎉" : "¡Perdiste! 💥";
-    resultModal.style.display = "block";
-  }, 200);
-}
-
-function checkWin() {
-  let revealedCount = 0;
-  for (const row of board) {
-    for (const cell of row) {
-      if (cell.isRevealed) revealedCount++;
-    }
-  }
-
-  if (revealedCount === ROWS * COLS - MINES_COUNT) {
-    gameOver(true);
-  }
 }
 
 function startTimer() {
-  timer = setInterval(() => {
-    secondsElapsed++;
-    updateTimerDisplay();
+  timer = setInterval(function () {
+    seconds++;
+    timerElement.textContent = '⏱ ' + (seconds < 10 ? '00' : seconds < 100 ? '0' : '') + seconds;
   }, 1000);
 }
 
 function stopTimer() {
   clearInterval(timer);
-  timer = null;
 }
 
-function updateTimerDisplay() {
-  timerElement.textContent = `⏱ ${String(secondsElapsed).padStart(3, "0")}`;
+function resetTimer() {
+  stopTimer();
+  seconds = 0;
+  timerElement.textContent = '⏱ 000';
 }
 
-resetButton.addEventListener("click", () => {
-  createBoard();
-});
+function createBoard() {
+  boardElement.innerHTML = '';
+  board = [];
+  revealed = [];
+  flagged = [];
 
-startButton.addEventListener("click", () => {
-  const playerName = playerNameInput.value.trim();
+  for (var i = 0; i < size; i++) {
+    var row = [];
+    var revealedRow = [];
+    var flaggedRow = [];
 
-  if (playerName.length < 3) {
-    nameWarningModal.style.display = "block";
+    var rowDiv = document.createElement('div');
+    rowDiv.classList.add('row');
+    boardElement.appendChild(rowDiv);
+
+    for (var j = 0; j < size; j++) {
+      row.push(0);
+      revealedRow.push(false);
+      flaggedRow.push(false);
+
+      var cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.setAttribute('data-row', i);
+      cell.setAttribute('data-col', j);
+
+      cell.addEventListener('click', handleCellClick);
+      cell.addEventListener('contextmenu', handleRightClick);
+
+      rowDiv.appendChild(cell);
+    }
+
+    board.push(row);
+    revealed.push(revealedRow);
+    flagged.push(flaggedRow);
+  }
+}
+
+function handleCellClick(e) {
+  if (gameOver) return;
+
+  var row = parseInt(this.getAttribute('data-row'));
+  var col = parseInt(this.getAttribute('data-col'));
+
+  if (!gameStarted) {
+    placeMines(row, col);
+    calculateNumbers();
+    gameStarted = true;
+    startTimer();
+  }
+
+  revealCell(row, col);
+}
+
+function handleRightClick(e) {
+  e.preventDefault();
+  if (gameOver || !gameStarted) return;
+
+  var row = parseInt(this.getAttribute('data-row'));
+  var col = parseInt(this.getAttribute('data-col'));
+
+  if (revealed[row][col]) return;
+
+  flagged[row][col] = !flagged[row][col];
+  this.classList.toggle('flagged');
+
+  updateFlagCounter();
+}
+
+function updateFlagCounter() {
+  var totalFlags = 0;
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      if (flagged[i][j]) totalFlags++;
+    }
+  }
+  flagCounter.textContent = '🚩 ' + (mineCount - totalFlags < 10 ? '0' : '') + (mineCount - totalFlags);
+}
+
+function revealCell(row, col) {
+  if (revealed[row][col] || flagged[row][col]) return;
+
+  var cell = getCell(row, col);
+  revealed[row][col] = true;
+  cell.classList.add('revealed');
+
+  if (board[row][col] === 'M') {
+    cell.classList.add('mine');
+    gameOver = true;
+    resetTimer();
+    revealAllMines();
+    resultMessage.textContent = '💥 ¡Perdiste!';
+    resultModal.style.display = 'flex';
+    resetButton.textContent = '😵';
     return;
   }
 
-  const modal = document.getElementById("startModal");
+  if (board[row][col] > 0) {
+    cell.classList.add('number-' + board[row][col]);
+    cell.textContent = board[row][col];
+  } else {
+    for (var dx = -1; dx <= 1; dx++) {
+      for (var dy = -1; dy <= 1; dy++) {
+        var newRow = row + dx;
+        var newCol = col + dy;
+        if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
+          revealCell(newRow, newCol);
+        }
+      }
+    }
+  }
+
+  checkWin();
+}
+
+function getCell(row, col) {
+  return boardElement.querySelector('[data-row="' + row + '"][data-col="' + col + '"]');
+}
+
+function revealAllMines() {
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      if (board[i][j] === 'M') {
+        var cell = getCell(i, j);
+        cell.classList.add('revealed', 'mine');
+      }
+    }
+  }
+}
+
+function checkWin() {
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      if (board[i][j] !== 'M' && !revealed[i][j]) return;
+    }
+  }
+  gameOver = true;
+  resetTimer();
+  resultMessage.textContent = '🎉 ¡Ganaste!';
+  resultModal.style.display = 'flex';
+  resetButton.textContent = '😎';
+}
+
+function placeMines(initialRow, initialCol) {
+  var minesPlaced = 0;
+  while (minesPlaced < mineCount) {
+    var row = Math.floor(Math.random() * size);
+    var col = Math.floor(Math.random() * size);
+
+    if (board[row][col] !== 'M' && (row !== initialRow || col !== initialCol)) {
+      board[row][col] = 'M';
+      minesPlaced++;
+    }
+  }
+}
+
+function calculateNumbers() {
+  for (var i = 0; i < size; i++) {
+    for (var j = 0; j < size; j++) {
+      if (board[i][j] === 'M') continue;
+
+      var count = 0;
+      for (var dx = -1; dx <= 1; dx++) {
+        for (var dy = -1; dy <= 1; dy++) {
+          var newRow = i + dx;
+          var newCol = j + dy;
+          if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
+            if (board[newRow][newCol] === 'M') count++;
+          }
+        }
+      }
+      board[i][j] = count;
+    }
+  }
+}
+
+function resetGame() {
+  gameStarted = false;
+  gameOver = false;
+  resetButton.textContent = '🙂';
+  resetTimer();
+  setDifficulty(difficultySelect.value);
   createBoard();
-  modal.style.display = "none";
+  updateFlagCounter();
+}
+
+resetButton.addEventListener('click', resetGame);
+modalRestart.addEventListener('click', function () {
+  resultModal.style.display = 'none';
+  resetGame();
 });
 
-document.getElementById("modal-restart").addEventListener("click", () => {
-  createBoard();
+closeNameWarning.addEventListener('click', function () {
+  nameWarningModal.style.display = 'none';
 });
 
-modalRestartButton.addEventListener("click", () => {
-  resultModal.style.display = "none";
-  createBoard();
-});
-
-document.getElementById("close-name-warning").addEventListener("click", () => {
-  nameWarningModal.style.display = "none";
-});
-
-difficultySelect.addEventListener("change", () => {
-  createBoard();
+startGameButton.addEventListener('click', function () {
+  var name = playerNameInput.value.trim();
+  if (name.length < 3) {
+    nameError.textContent = 'El nombre debe tener al menos 3 caracteres.';
+    return;
+  }
+  document.getElementById('startModal').classList.remove('show');
+  resetGame();
 });
