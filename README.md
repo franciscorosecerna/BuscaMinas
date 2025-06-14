@@ -24,9 +24,15 @@ Este proyecto es una implementacion del clasico juego **Buscaminas**, desarrolla
 ## Estructura del proyecto
 
 ```bash
-├── index.html
-├── style.css
-└── script.js
+├── index.html           # Estructura HTML
+├── style.css            # Estilos visuales
+├── js/
+│   ├── config.js        # Configuración general del juego
+│   ├── game.js          # Lógica principal
+│   ├── handlers.js      # Manejadores de eventos
+│   └── ui.js            # Lógica de interfaz
+│   └── utils.js         # Funciones auxiliares
+│   └── main.js          # Punto de entrada: inicialización y listeners
 ```
 ---
 ##  Nota
