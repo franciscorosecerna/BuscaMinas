@@ -1,17 +1,23 @@
 # 🧨 Buscaminas (Minesweeper)
 
-Este proyecto es una implementación del clásico juego **Buscaminas**
+Este proyecto es una implementacion del clasico juego **Buscaminas**, desarrollado con HTML, CSS y JavaScript puro.
 
 ---
 
-## Características
+## Caracteristicas
 
-- **Rejilla de 10x10** con **10 minas**
+- **Tres niveles de dificultad** seleccionables:
+    - Facil (8x8 - 10 minas)
+    - Medio (12x12 - 20 minas)
+    - Dificil (16x16 - 40 minas)
 - **Temporizador** que inicia con el primer clic
 - **Contador de banderas** restantes
-- **Botón con carita** que cambia al ganar o perder
-- **Revelado automático** de casillas vacías
-- **Detección de victoria y derrota**
+- **Boton con carita** para reiniciar el juego:
+    - 🙂 Inicial
+    - 😵 Al perder
+    - 😎 Al ganar
+- **Revelado automatico** de casillas vacias (efecto cascada)
+- **Deteccion de victoria y derrota**
 
 ---
 

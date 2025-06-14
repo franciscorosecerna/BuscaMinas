@@ -8,7 +8,6 @@
 </head>
 <body>
 
-  <div id="playerInfo"></div>
   <div id="startModal" class="modal show">
     <div class="modal-content">
       <h2>Bienvenido al Buscaminas</h2>
@@ -18,6 +17,13 @@
       <p id="nameError" class="error-message"></p>
     </div>
   </div>
+
+  <label for="difficulty">Dificultad:</label>
+  <select id="difficulty">
+    <option value="easy">Facil (8x8 - 10 minas)</option>
+    <option value="medium">Medio (12x12 - 25 minas)</option>
+    <option value="hard">Dificil (16x16 - 40 minas)</option>
+  </select>
 
   <div id="result-modal" class="modal">
     <div class="modal-content">

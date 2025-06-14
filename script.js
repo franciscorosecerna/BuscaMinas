@@ -8,10 +8,16 @@ const resultMessage = document.getElementById("result-message");
 const modalRestartButton = document.getElementById("modal-restart");
 const startButton = document.getElementById("start-game");
 const nameWarningModal = document.getElementById("name-warning-modal");
-const ROWS = 8;
-const COLS = 8;
-const MINES_COUNT = 10;
+const difficultySelect = document.getElementById("difficulty");
+const DIFFICULTY_SETTINGS = {
+  easy:   { rows: 8, cols: 8, mines: 10 },
+  medium: { rows: 12, cols: 12, mines: 25 },
+  hard:   { rows: 16, cols: 16, mines: 40 }
+};
 
+let ROWS = 8;
+let COLS = 8;
+let MINES_COUNT = 10;
 let flagsLeft = MINES_COUNT;
 let timer = null;
 let secondsElapsed = 0;
@@ -19,20 +25,12 @@ let gameStarted = false;
 let board = [];
 let minePositions = [];
 
-startButton.addEventListener("click", () => {
-  const playerName = playerNameInput.value.trim();
-
-  if (playerName.length < 3) {
-    nameWarningModal.style.display = "block";
-    return;
-  }
-
-  createBoard();
-  const modal = document.getElementById("startModal");
-  modal.style.display = "none";
-});
-
 function createBoard() {
+  const settings = getSelectedDifficultySettings();
+  ROWS = settings.rows;
+  COLS = settings.cols;
+  MINES_COUNT = settings.mines;
+
   secondsElapsed = 0;
   updateTimerDisplay();
   gameStarted = false;
@@ -41,6 +39,8 @@ function createBoard() {
   boardElement.innerHTML = "";
   minePositions = getRandomMinePositions();
 
+  boardElement.style.gridTemplateColumns = `repeat(${COLS}, 1fr)`;
+  boardElement.style.gridTemplateRows = `repeat(${ROWS}, 1fr)`;
   for (let row = 0; row < ROWS; row++) {
     const rowArray = [];
     for (let col = 0; col < COLS; col++) {
@@ -70,6 +70,11 @@ function createBoard() {
   flagsLeft = MINES_COUNT;
   updateFlagCounter();
   calculateAdjacentMines();
+}
+
+function getSelectedDifficultySettings() {
+  const selectedDifficulty = difficultySelect.value;
+  return DIFFICULTY_SETTINGS[selectedDifficulty];
 }
 
 function updateFlagCounter() {
@@ -255,8 +260,26 @@ function updateTimerDisplay() {
   timerElement.textContent = `⏱ ${String(secondsElapsed).padStart(3, "0")}`;
 }
 
-resetButton.addEventListener("click", createBoard);
+resetButton.addEventListener("click", () => {
+  createBoard();
+});
 
+startButton.addEventListener("click", () => {
+  const playerName = playerNameInput.value.trim();
+
+  if (playerName.length < 3) {
+    nameWarningModal.style.display = "block";
+    return;
+  }
+
+  const modal = document.getElementById("startModal");
+  createBoard();
+  modal.style.display = "none";
+});
+
+document.getElementById("modal-restart").addEventListener("click", () => {
+  createBoard();
+});
 
 modalRestartButton.addEventListener("click", () => {
   resultModal.style.display = "none";
@@ -265,4 +288,8 @@ modalRestartButton.addEventListener("click", () => {
 
 document.getElementById("close-name-warning").addEventListener("click", () => {
   nameWarningModal.style.display = "none";
+});
+
+difficultySelect.addEventListener("change", () => {
+  createBoard();
 });
