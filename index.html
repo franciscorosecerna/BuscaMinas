@@ -25,6 +25,30 @@
     <option value="hard">Difícil (16x16 - 40 minas)</option>
   </select>
 
+  <button id="show-form">Contacto</button>
+
+  <div id="form-container" class="hide">
+    <form id="contact-form">
+      <h2>Contacto</h2>
+
+      <label for="name">Nombre:</label>
+      <input id="name" type="text">
+      <div id="error-name" class="error"></div>
+
+      <label for="mail">Correo electrónico:</label>
+      <input id="mail" type="text">
+      <div id="error-mail" class="error"></div>
+
+      <label for="message">Mensaje:</label>
+      <textarea id="message" rows="5"></textarea>
+      <div id="error-message" class="error"></div>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <button id="toggle-theme">🌙 Modo oscuro</button>
+
   <div id="result-modal" class="modal">
     <div class="modal-content">
       <p id="result-message"></p>
@@ -46,9 +70,10 @@
       <div class="timer">⏱ 000</div>
     </div>
 
-    <div id="board" class="board"></div>
+    <div id="board" class="board"></div> 
   </div>
 
+  
   <div class="github-link">
   <a href="https://github.com/franciscorosecerna/BuscaMinas" target="_blank" title="Ver en GitHub">
     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" />
