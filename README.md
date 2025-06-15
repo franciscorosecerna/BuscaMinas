@@ -26,7 +26,13 @@ Este proyecto es una implementacion del clasico juego **Buscaminas**, desarrolla
 ```bash
 ├── index.html
 ├── style.css
-└── script.js
+├── js/
+│   ├── config.js
+│   ├── game.js
+│   ├── handlers.js
+│   └── ui.js
+│   └── utils.js
+│   └── main.js
 ```
 ---
 ##  Nota
