@@ -37,17 +37,17 @@ document.addEventListener('DOMContentLoaded', function () {
       var valid = true;
 
       if (!/^[a-zA-Z0-9\s]+$/.test(name) || name === '') {
-        showError('nombre', 'El nombre debe ser alfanumérico.');
+        showError('name', 'El nombre debe ser alfanumérico.');
         valid = false;
       }
 
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail)) {
-        showError('email', 'El correo electrónico no es válido.');
+        showError('mail', 'El correo electrónico no es válido.');
         valid = false;
       }
 
       if (message.length < 6) {
-        showError('mensaje', 'El mensaje debe tener al menos 6 caracteres.');
+        showError('message', 'El mensaje debe tener al menos 6 caracteres.');
         valid = false;
       }
 

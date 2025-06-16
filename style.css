@@ -149,12 +149,13 @@ body.dark #toggle-theme {
 }
 
 form {
-  background: #fff;
+  background: var(--color-header);
   padding: 2rem;
   border-radius: 8px;
   max-width: 400px;
   margin: auto;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  color: var(--color-texto);
 }
 
 input, textarea {
@@ -163,6 +164,13 @@ input, textarea {
   margin-top: 0.25rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  background-color: var(--color-revealed);
+  color: var(--color-texto);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #999;
 }
 
 button {
@@ -173,6 +181,7 @@ button {
   color: white;
   border-radius: 4px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
 button:hover {
