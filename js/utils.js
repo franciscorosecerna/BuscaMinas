@@ -18,14 +18,15 @@ function resetTimer() {
 
 function updateFlagCounter() {
   var totalFlags = 0;
-  var x = '0';
+  var x;
   for (var i = 0; i < size; i++) {
     for (var j = 0; j < size; j++) {
       if (flagged[i][j]) totalFlags++;
     }
   }
-  if (totalFlags > 10 || mineCount - totalFlags < 0) x = ''
-  flagCounter.textContent = '🚩 ' + x + (mineCount - totalFlags);
+  var remainingFlags = mineCount - totalFlags;
+  var shouldPad = remainingFlags > 0 && remainingFlags < 10;
+  flagCounter.textContent = '🚩 ' + (shouldPad ? '0' : '') + remainingFlags;
 }
 
 function getCell(row, col) {
