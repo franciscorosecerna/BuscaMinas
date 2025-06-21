@@ -42,6 +42,7 @@ function revealCell(row, col) {
     gameOver = true;
     resetTimer();
     revealAllMines();
+    soundDefeat.play();
     resultMessage.textContent = '💥 ¡Perdiste!';
     resultModal.style.display = 'flex';
     resetButton.textContent = '😵';

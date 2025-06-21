@@ -21,3 +21,7 @@ var gameStarted = false;
 var gameOver = false;
 var timer;
 var seconds = 0;
+var soundVictory = new Audio('sounds/victory.mp3');
+var soundDefeat = new Audio('sounds/defeat.mp3');
+soundDefeat.volume = 0.3;
+soundVictory.volume = 0.3;

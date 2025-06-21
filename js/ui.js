@@ -18,6 +18,7 @@ function checkWin() {
   }
   gameOver = true;
   resetTimer();
+  soundVictory.play();
   resultMessage.textContent = '🎉 ¡Ganaste!';
   resultModal.style.display = 'flex';
   resetButton.textContent = '😎';
@@ -31,6 +32,10 @@ function checkWin() {
 }
 
 function resetGame() {
+  soundVictory.pause();
+  soundVictory.currentTime = 0;
+  soundDefeat.pause();
+  soundDefeat.currentTime = 0;
   gameStarted = false;
   gameOver = false;
   resetButton.textContent = '🙂';
