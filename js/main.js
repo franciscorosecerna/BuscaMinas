@@ -96,6 +96,14 @@ startGameButton.addEventListener('click', function () {
   }
   document.getElementById('startModal').classList.remove('show');
   resetGame();
+
+  if (!localStorage.getItem('ranking')) {
+    localStorage.setItem('ranking', JSON.stringify([
+      { nombre: 'Jugador1', puntaje: 120, fecha: '2025-06-21T00:00:00Z', duracion: 85 },
+      { nombre: 'Jugador2', puntaje: 150, fecha: '2025-06-20T00:00:00Z', duracion: 75 }
+    ]));
+  }
+
 });
 
 difficultySelect.addEventListener('change', function () {

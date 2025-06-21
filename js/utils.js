@@ -77,7 +77,7 @@ function saveGame(name, score, time) {
 }
 
 function showRanking(criterio) {
-  var ranking = JSON.parse(localStorage.getItem('ranking')) || []; //si le quito el [] explota
+  var ranking = JSON.parse(localStorage.getItem('ranking')) || [];
 
   if (criterio === 'fecha') {
     ranking.sort(function(a, b) {
@@ -93,8 +93,32 @@ function showRanking(criterio) {
   modalBody.innerHTML = '';
 
   for (var i = 0; i < ranking.length; i++) {
+    var partida = ranking[i];
+
     var item = document.createElement('li');
-    item.textContent = ranking[i].nombre + ' - ' + ranking[i].puntaje + ' pts - ' + ranking[i].duracion + 's - ' + ranking[i].fecha;
+    item.className = 'ranking-item';
+
+    var nombre = document.createElement('span');
+    nombre.className = 'ranking-name';
+    nombre.textContent = partida.nombre;
+
+    var puntaje = document.createElement('span');
+    puntaje.className = 'ranking-score';
+    puntaje.textContent = '🏆 ' + partida.puntaje + ' pts';
+
+    var duracion = document.createElement('span');
+    duracion.className = 'ranking-time';
+    duracion.textContent = '⏱️ ' + partida.duracion + 's';
+
+    var fecha = document.createElement('span');
+    fecha.className = 'ranking-date';
+    fecha.textContent = '📅 ' + partida.fecha.split('T')[0];
+
+    item.appendChild(nombre);
+    item.appendChild(puntaje);
+    item.appendChild(duracion);
+    item.appendChild(fecha);
+
     modalBody.appendChild(item);
   }
 

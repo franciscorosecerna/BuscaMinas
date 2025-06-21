@@ -70,7 +70,7 @@ function calculateNumbers() {
       var count = 0;
       for (var dx = -1; dx <= 1; dx++) {
         for (var dy = -1; dy <= 1; dy++) {
-          if (dx === 0 && dy === 0) continue; // evita la celda actual
+          if (dx === 0 && dy === 0) continue;
 
           var newRow = i + dx;
           var newCol = j + dy;

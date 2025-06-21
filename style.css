@@ -5,6 +5,9 @@
   --color-hover: #d5d5d5;
   --color-revealed: #fafafa;
   --color-header: #bdbdbd;
+  --color-btn: #007BFF;
+  --color-btn-hover: #0056b3;
+  --color-btn-dark: #3399FF;
 }
 
 body.dark {
@@ -14,6 +17,8 @@ body.dark {
   --color-hover: #444;
   --color-revealed: #1c1c1c;
   --color-header: #2c2c2c;
+  --color-btn: #3399FF;
+  --color-btn-hover: #007BFF;
 }
 
 * {
@@ -75,7 +80,7 @@ body {
   align-items: center;
   aspect-ratio: 1;
   background-color: var(--color-celda);
-  border: 1px solid #bbbbbb;
+  border: 1px solid #666666;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
@@ -182,44 +187,27 @@ textarea::placeholder {
   color: #999;
 }
 
-button {
+button,
+.btn {
   margin-top: 1.5rem;
   padding: 0.5rem 1rem;
   border: none;
-  background: #007BFF;
+  background: var(--color-btn);
   color: white;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.3s;
-}
-
-button:hover {
-  background: #0056b3;
-}
-
-.btn {
-  background-color: #007BFF;
-  color: white;
-  padding: 6px 12px;
-  font-size: 0.9rem;
-  border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0.9rem;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   line-height: 1;
   height: 34px;
-  transition: background-color 0.3s;
 }
 
+button:hover,
 .btn:hover {
-  background-color: #0056b3;
-}
-
-body.dark .btn {
-  background-color: #0056b3;
-  color: white;
+  background: var(--color-btn-hover);
 }
 
 .modal,
@@ -273,8 +261,33 @@ body.dark .btn {
   list-style: none;
   padding-left: 0;
   text-align: left;
-  max-height: 200px;
+  max-height: 250px;
   overflow-y: auto;
+  width: 100%;
+}
+
+.ranking-item {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 0.5rem 1rem;
+  margin: 0.3rem 0;
+  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  color: white;
+  font-family: sans-serif;
+}
+
+.ranking-name {
+  font-weight: bold;
+  flex: 1 1 25%;
+}
+
+.ranking-score,
+.ranking-time,
+.ranking-date {
+  flex: 1 1 25%;
 }
 
 .github-link {
