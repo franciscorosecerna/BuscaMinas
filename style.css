@@ -31,6 +31,10 @@ body {
   font-family: sans-serif;
 }
 
+.hide {
+  display: none;
+}
+
 .container {
   align-items: center;
   background: rgba(30, 30, 30, 0.55);
@@ -44,6 +48,11 @@ body {
   margin: 2rem auto;
   max-width: 100%;
   padding: 1.5rem;
+}
+
+#form-container {
+  margin-top: 2rem;
+  animation: fadeIn 0.3s ease-in;
 }
 
 .header {
@@ -188,6 +197,31 @@ button:hover {
   background: #0056b3;
 }
 
+.btn {
+  background-color: #007BFF;
+  color: white;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  height: 34px;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+
+body.dark .btn {
+  background-color: #0056b3;
+  color: white;
+}
+
 .modal,
 #result-modal {
   background: rgba(0, 0, 0, 0.5);
@@ -228,6 +262,21 @@ button:hover {
   font-size: 0.9rem;
 }
 
+.ranking-controls {
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.ranking-list {
+  list-style: none;
+  padding-left: 0;
+  text-align: left;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
 .github-link {
   margin-top: 30px;
   text-align: center;
@@ -247,6 +296,11 @@ button:hover {
   transform: scale(1.2);
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 @media screen and (max-width: 600px) {
   .cell {
     font-size: 1rem;
@@ -257,18 +311,4 @@ button:hover {
   .modal-content {
     padding: 1.5rem;
   }
-}
-
-.hide {
-  display: none;
-}
-
-#form-container {
-  margin-top: 2rem;
-  animation: fadeIn 0.3s ease-in;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
 }

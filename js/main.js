@@ -106,3 +106,19 @@ difficultySelect.addEventListener('change', function () {
   createBoard();
   updateFlagCounter();
 });
+
+document.getElementById('ranking-button').addEventListener('click', function () {
+  showRanking('puntaje');
+});
+
+document.getElementById('ranking-close').addEventListener('click', function () {
+  document.getElementById('ranking-modal').classList.remove('show');
+});
+
+document.getElementById('date').addEventListener('click', function () {
+  showRanking('fecha');
+});
+
+document.getElementById('score').addEventListener('click', function () {
+  showRanking('puntaje');
+});

@@ -25,7 +25,7 @@
     <option value="hard">Difícil (16x16 - 40 minas)</option>
   </select>
 
-  <button id="show-form">Contacto</button>
+  <button id="show-form" class="btn">📩 Contacto</button>
 
   <div id="form-container" class="hide">
     <form id="contact-form">
@@ -47,7 +47,21 @@
     </form>
   </div>
 
-  <button id="toggle-theme">🌙 Modo oscuro</button>
+  <button id="ranking-button" class="btn">📊 Ver Ranking</button>
+
+  <div id="ranking-modal" class="modal">
+    <div class="modal-content ranking-modal">
+      <h2>🏆 Ranking de Partidas</h2>
+      <div class="ranking-controls">
+        <button id="score" class="btn">Ordenar por Puntaje</button>
+        <button id="date" class="btn">Ordenar por Fecha</button>
+      </div>
+      <ul id="ranking-body" class="ranking-list"></ul>
+      <button id="ranking-close" class="btn">Cerrar</button>
+    </div>
+  </div>
+
+  <button id="toggle-theme" class="btn">🌙 Modo oscuro</button>
 
   <div id="result-modal" class="modal">
     <div class="modal-content">
