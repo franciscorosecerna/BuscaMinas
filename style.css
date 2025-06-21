@@ -1,7 +1,7 @@
 :root {
-  --color-fondo: #f0f0f0;
-  --color-texto: #121212;
-  --color-celda: #e0e0e0;
+  --color-back: #f0f0f0;
+  --color-text: #121212;
+  --color-cell: #c4c4c4;
   --color-hover: #d5d5d5;
   --color-revealed: #fafafa;
   --color-header: #bdbdbd;
@@ -11,9 +11,9 @@
 }
 
 body.dark {
-  --color-fondo: #121212;
-  --color-texto: #f0f0f0;
-  --color-celda: #333;
+  --color-back: #121212;
+  --color-text: #f0f0f0;
+  --color-cell: #333;
   --color-hover: #444;
   --color-revealed: #1c1c1c;
   --color-header: #2c2c2c;
@@ -28,11 +28,11 @@ body.dark {
 }
 
 body {
-  background-image: url('http://www.transparenttextures.com/patterns/black-felt.png');
-  background-color: var(--color-fondo);
+  background-image: url('https://www.transparenttextures.com/patterns/batthern.png');
+  background-color: var(--color-back);
   background-repeat: repeat;
   background-size: auto, 400% 400%;
-  color: var(--color-texto);
+  color: var(--color-text);
   font-family: sans-serif;
 }
 
@@ -79,8 +79,8 @@ body {
 .cell {
   align-items: center;
   aspect-ratio: 1;
-  background-color: var(--color-celda);
-  border: 1px solid #666666;
+  background-color: var(--color-cell);
+  border: 1px solid #8b8b8b;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
@@ -169,7 +169,7 @@ form {
   max-width: 400px;
   margin: auto;
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  color: var(--color-texto);
+  color: var(--color-text);
 }
 
 input, textarea {
@@ -179,7 +179,7 @@ input, textarea {
   border: 1px solid #ccc;
   border-radius: 4px;
   background-color: var(--color-revealed);
-  color: var(--color-texto);
+  color: var(--color-text);
 }
 
 input::placeholder,
@@ -302,6 +302,11 @@ button:hover,
   opacity: 0.85;
   transition: transform 0.3s ease;
   width: 40px;
+  filter: invert(0);
+}
+
+body.dark .github-link img {
+  filter: invert(1);
 }
 
 .github-link img:hover {
