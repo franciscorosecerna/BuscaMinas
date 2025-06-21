@@ -17,18 +17,14 @@ function checkWin() {
     }
   }
   gameOver = true;
+  var name = playerNameInput.value || "Jugador";
+  var duration = seconds;
+  saveGame(name, duration);
   resetTimer();
   soundVictory.play();
   resultMessage.textContent = '🎉 ¡Ganaste!';
   resultModal.style.display = 'flex';
   resetButton.textContent = '😎';
-
-  var nombre = playerNameInput.value || "Jugador";
-  var reveladas = countRevealCells();
-  var correctas = countCorrectFlags();
-  var duracion = seconds;
-  var puntaje = calculateScore(reveladas, correctas, duracion);
-  saveGame(nombre, puntaje, duracion);
 }
 
 function resetGame() {

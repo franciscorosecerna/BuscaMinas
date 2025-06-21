@@ -18,12 +18,14 @@ function resetTimer() {
 
 function updateFlagCounter() {
   var totalFlags = 0;
+  var x = '0';
   for (var i = 0; i < size; i++) {
     for (var j = 0; j < size; j++) {
       if (flagged[i][j]) totalFlags++;
     }
   }
-  flagCounter.textContent = '🚩 ' + (mineCount - totalFlags < 10 ? '0' : '') + (mineCount - totalFlags);
+  if (totalFlags > 10 || mineCount - totalFlags < 0) x = ''
+  flagCounter.textContent = '🚩 ' + x + (mineCount - totalFlags);
 }
 
 function getCell(row, col) {
@@ -58,13 +60,17 @@ function countCorrectFlags() {
   return correct;
 }
 
-function saveGame(name, score, time) {
+function saveGame(name, duration) {
+  var revealCells = countRevealCells();
+  var correctFlags = countCorrectFlags();
+  var score = calculateScore(revealCells, correctFlags, duration);
+  
   var date = new Date().toISOString();
   var partida = {
     nombre: name,
     puntaje: score,
     fecha: date,
-    duracion: time
+    duracion: duration
   };
 
   var ranking = JSON.parse(localStorage.getItem('ranking')) || [];

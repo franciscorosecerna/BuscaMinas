@@ -40,6 +40,9 @@ function revealCell(row, col) {
   if (board[row][col] === 'M') {
     cell.classList.add('mine');
     gameOver = true;
+    var name = playerNameInput.value || "Jugador";
+    var duration = seconds;
+    saveGame(name, duration);
     resetTimer();
     revealAllMines();
     soundDefeat.play();
