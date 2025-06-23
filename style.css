@@ -1,24 +1,23 @@
 :root {
-  --color-back: #f0f0f0;
-  --color-text: #121212;
-  --color-cell: #c4c4c4;
-  --color-hover: #d5d5d5;
-  --color-revealed: #fafafa;
-  --color-header: #bdbdbd;
-  --color-btn: #007BFF;
-  --color-btn-hover: #0056b3;
-  --color-btn-dark: #3399FF;
+  --color-back: #ffffff;
+  --color-text: #000000;
+  --color-cell: #d3d3d3;
+  --color-hover: #b0b0b0;
+  --color-revealed: #ffffff;
+  --color-header: #c0c0c0;
+  --color-btn: #0066cc;
+  --color-btn-hover: #004d99;
 }
 
 body.dark {
-  --color-back: #121212;
-  --color-text: #f0f0f0;
-  --color-cell: #333;
-  --color-hover: #444;
-  --color-revealed: #1c1c1c;
-  --color-header: #2c2c2c;
-  --color-btn: #3399FF;
-  --color-btn-hover: #007BFF;
+  --color-back: #000000;
+  --color-text: #ffffff;
+  --color-cell: #333333;
+  --color-hover: #555555;
+  --color-revealed: #1a1a1a;
+  --color-header: #222222;
+  --color-btn: #4da6ff;
+  --color-btn-hover: #3399ff;
 }
 
 * {
@@ -40,6 +39,11 @@ body {
   display: none;
 }
 
+.game-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .container {
   align-items: center;
   background: rgba(30, 30, 30, 0.55);
@@ -47,12 +51,16 @@ body {
   background-color: var(--color-header);
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-  display: flex;
+  display: inline-block;
   flex-direction: column;
   justify-content: center;
   margin: 2rem auto;
   max-width: 100%;
   padding: 1.5rem;
+}
+
+.board-wrapper {
+  display: inline-block;
 }
 
 #form-container {
@@ -61,10 +69,14 @@ body {
 }
 
 .header {
-  align-items: center;
   display: flex;
   justify-content: space-between;
-  margin-bottom: 12px;
+  align-items: center;
+  width: 100%;
+  max-width: fit-content;
+  margin: 0 auto 12px;
+  gap: 1rem;
+  position: relative;
 }
 
 .board {
@@ -80,7 +92,7 @@ body {
   align-items: center;
   aspect-ratio: 1;
   background-color: var(--color-cell);
-  border: 1px solid #8b8b8b;
+  border: 1px solid #6b6b6b;
   border-radius: 4px;
   box-sizing: border-box;
   cursor: pointer;
@@ -120,9 +132,18 @@ body {
 .cell.number-7 { color: #212121; }
 .cell.number-8 { color: #757575; }
 
+.controls {
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
 .counter,
 .timer {
-  background-color: #212121;
+  background-color: #1d1d1d;
   border-radius: 4px;
   color: red;
   font-size: 1.2rem;
@@ -162,6 +183,29 @@ body.dark #toggle-theme {
   border-color: #666;
 }
 
+button,
+.btn {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  background: var(--color-btn);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  height: 34px;
+}
+
+button:hover,
+.btn:hover {
+  background: var(--color-btn-hover);
+}
+
 form {
   background: var(--color-header);
   padding: 2rem;
@@ -185,29 +229,6 @@ input, textarea {
 input::placeholder,
 textarea::placeholder {
   color: #999;
-}
-
-button,
-.btn {
-  margin-top: 1.5rem;
-  padding: 0.5rem 1rem;
-  border: none;
-  background: var(--color-btn);
-  color: white;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  font-size: 0.9rem;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  height: 34px;
-}
-
-button:hover,
-.btn:hover {
-  background: var(--color-btn-hover);
 }
 
 .modal,
@@ -237,17 +258,6 @@ button:hover,
   padding: 2rem;
   text-align: center;
   width: fit-content;
-}
-
-.error {
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 0.25rem;
-}
-
-.error-message {
-  color: red;
-  font-size: 0.9rem;
 }
 
 .ranking-controls {
@@ -290,6 +300,17 @@ button:hover,
   flex: 1 1 25%;
 }
 
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9rem;
+}
+
 .github-link {
   margin-top: 30px;
   text-align: center;
@@ -297,7 +318,6 @@ button:hover,
 
 .github-link img {
   cursor: pointer;
-  filter: invert(1);
   height: 40px;
   opacity: 0.85;
   transition: transform 0.3s ease;

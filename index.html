@@ -18,14 +18,20 @@
     </div>
   </div>
 
-  <label for="difficulty">Dificultad:</label>
-  <select id="difficulty">
-    <option value="easy">Fácil (8x8 - 10 minas)</option>
-    <option value="medium">Medio (12x12 - 25 minas)</option>
-    <option value="hard">Difícil (16x16 - 40 minas)</option>
-  </select>
+  <div class="game-wrapper">
 
-  <button id="show-form" class="btn">📩 Contacto</button>
+    <div class="controls">
+      <label for="difficulty">Dificultad:</label>
+      <select id="difficulty">
+        <option value="easy">Fácil (8x8 - 10 minas)</option>
+        <option value="medium">Medio (12x12 - 25 minas)</option>
+        <option value="hard">Difícil (16x16 - 40 minas)</option>
+      </select>
+
+      <button id="show-form" class="btn">📩 Contacto</button>
+      <button id="ranking-button" class="btn">📊 Ver Ranking</button>
+      <button id="toggle-theme" class="btn">🌙 Modo oscuro</button>
+    </div>
 
   <div id="form-container" class="hide">
     <form id="contact-form">
@@ -47,21 +53,18 @@
     </form>
   </div>
 
-  <button id="ranking-button" class="btn">📊 Ver Ranking</button>
-
-  <div id="ranking-modal" class="modal">
-    <div class="modal-content ranking-modal">
-      <h2>🏆 Ranking de Partidas</h2>
-      <div class="ranking-controls">
-        <button id="score" class="btn">Ordenar por Puntaje</button>
-        <button id="date" class="btn">Ordenar por Fecha</button>
+    <div class="container">
+      <div class="header">
+        <div class="flag-counter">🚩 010</div>
+        <button id="reset-btn">🙂</button>
+        <div class="timer">⏱ 000</div>
       </div>
-      <ul id="ranking-body" class="ranking-list"></ul>
-      <button id="ranking-close" class="btn">Cerrar</button>
+
+      <div class="board-wrapper">
+        <div id="board" class="board"></div> 
+      </div>
     </div>
   </div>
-
-  <button id="toggle-theme" class="btn">🌙 Modo oscuro</button>
 
   <div id="result-modal" class="modal">
     <div class="modal-content">
@@ -77,21 +80,22 @@
     </div>
   </div>
 
-  <div class="container">
-    <div class="header">
-      <div class="flag-counter">🚩 010</div>
-      <button id="reset-btn">🙂</button>
-      <div class="timer">⏱ 000</div>
+  <div id="ranking-modal" class="modal">
+    <div class="modal-content ranking-modal">
+      <h2>🏆 Ranking de Partidas</h2>
+      <div class="ranking-controls">
+        <button id="score" class="btn">Ordenar por Puntaje</button>
+        <button id="date" class="btn">Ordenar por Fecha</button>
+      </div>
+      <ul id="ranking-body" class="ranking-list"></ul>
+      <button id="ranking-close" class="btn">Cerrar</button>
     </div>
-
-    <div id="board" class="board"></div> 
   </div>
 
-  
   <div class="github-link">
-  <a href="https://github.com/franciscorosecerna/BuscaMinas" target="_blank" title="Ver en GitHub">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" />
-  </a>
+    <a href="https://github.com/franciscorosecerna/BuscaMinas" target="_blank" title="Ver en GitHub">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" />
+    </a>
   </div>
 
   <script src="js/game.js"></script>

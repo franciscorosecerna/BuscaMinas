@@ -2,10 +2,20 @@
 document.addEventListener('DOMContentLoaded', function () {
   var toggleBtn = document.getElementById('toggle-theme');
   var storedTheme = localStorage.getItem('theme');
+  var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   if (storedTheme === 'dark') {
     document.body.classList.add('dark');
     toggleBtn.textContent = '☀️ Modo claro';
+  } else if (storedTheme === 'light') {
+    document.body.classList.remove('dark');
+    toggleBtn.textContent = '🌙 Modo oscuro';
+  } else if (prefersDark) {
+    document.body.classList.add('dark');
+    toggleBtn.textContent = '☀️ Modo claro';
+  } else {
+    document.body.classList.remove('dark');
+    toggleBtn.textContent = '🌙 Modo oscuro';
   }
 
   toggleBtn.addEventListener('click', function () {
@@ -69,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   function clearErrors() {
-    var campos = ['nombre', 'email', 'mensaje'];
+    var campos = ['name', 'mail', 'message'];
     for (var i = 0; i < campos.length; i++) {
       var err = document.getElementById('error-' + campos[i]);
       if (err) err.textContent = '';
