@@ -18,7 +18,7 @@ Este proyecto es una implementacion del clasico juego **Buscaminas**, desarrolla
     - 😎 Al ganar
 - **Revelado automatico** de casillas vacias (efecto cascada)
 - **Deteccion de victoria y derrota**
-- **Chording:** clic en una casilla numérica con número revelado y cantidad correcta de banderas a su alrededor revelará automáticamente sus adyacentes no marcadas
+- **Chording:** al pulsar los 2 clicks en una casilla con número revelado y la cantidad correcta de banderas a su alrededor se revelará automáticamente sus adyacentes no marcadas
 
 ## 📈Ranking de partidas
 - **Guarda:**
