@@ -69,3 +69,52 @@ function revealCell(row, col) {
 
   checkWin();
 }
+
+document.getElementById('board').addEventListener('mousedown', function (e) {
+  if (e.buttons === 3) {
+    var target = e.target;
+    if (!target.classList.contains('cell') || !target.classList.contains('revealed')) return;
+
+    var row = parseInt(target.getAttribute('data-row'), 10);
+    var col = parseInt(target.getAttribute('data-col'), 10);
+    var cellValue = board[row][col];
+
+    if (isNaN(cellValue) || cellValue <= 0) return;
+
+    var flagCount = 0;
+    var hiddenCells = [];
+
+    for (var dx = -1; dx <= 1; dx++) {
+      for (var dy = -1; dy <= 1; dy++) {
+        if (dx === 0 && dy === 0) continue;
+        var newRow = row + dx;
+        var newCol = col + dy;
+
+        if (newRow >= 0 && newRow < size && newCol >= 0 && newCol < size) {
+          if (flagged[newRow][newCol]) {
+            flagCount++;
+          } else if (!revealed[newRow][newCol]) {
+            hiddenCells.push({ row: newRow, col: newCol });
+          }
+        }
+      }
+    }
+
+    if (flagCount === cellValue) {
+        for (var i = 0; i < hiddenCells.length; i++) {
+          var pos = hiddenCells[i];
+          var el = getCell(pos.row, pos.col);
+          el.classList.add('flash');
+        }
+
+        setTimeout(function () {
+          for (var i = 0; i < hiddenCells.length; i++) {
+            var pos = hiddenCells[i];
+            var el = getCell(pos.row, pos.col);
+            el.classList.remove('flash');
+            revealCell(pos.row, pos.col);
+          }
+        }, 600);
+      }
+    }
+});

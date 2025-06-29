@@ -18,10 +18,7 @@ Este proyecto es una implementacion del clasico juego **Buscaminas**, desarrolla
     - 😎 Al ganar
 - **Revelado automatico** de casillas vacias (efecto cascada)
 - **Deteccion de victoria y derrota**
-- **Cálculo de puntaje** basado en:
-  - Casillas reveladas
-  - Banderas correctas
-  - Tiempo invertido
+- **Chording:** clic en una casilla numérica con número revelado y cantidad correcta de banderas a su alrededor revelará automáticamente sus adyacentes no marcadas
 
 ## 📈Ranking de partidas
 - **Guarda:**
@@ -33,10 +30,18 @@ Este proyecto es una implementacion del clasico juego **Buscaminas**, desarrolla
   - Puntaje (predeterminado)
   - Fecha
 
+### Cálculo del puntaje:
+El sistema de puntaje considera:
+
+- ✅ Casillas reveladas sin mina: `+10 punto c/u`
+- 🚩 Banderas correctas sobre minas: `+20 puntos c/u`
+- ⏱ Penalización por tiempo: `-1 punto cada 2 segundos`
+
 ## 🎨 Temas
 
 - 🌞 para el **Modo claro** y 🌙 para el **Modo oscuro**
 - Se guarda la preferencia del jugador
+- También se detecta automáticamente el **tema del sistema operativo**
 
 ## 📣 Formulario de contacto
 
@@ -73,4 +78,5 @@ Este proyecto es una implementacion del clasico juego **Buscaminas**, desarrolla
 
 ##  Nota
 
-Este proyecto fue desarrollado con fines **educativos y recreativos**.
+Este proyecto fue desarrollado con **fines educativos y recreativos.**
+No tiene fines comerciales y puede ser modificado y adaptado libremente.

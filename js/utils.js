@@ -74,17 +74,17 @@ function saveGame(name, duration) {
     duracion: duration
   };
 
-  var ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+  var ranking = JSON.parse(sessionStorage.getItem('ranking')) || [];
   ranking.push(partida);
   ranking.sort(function(a, b) {
     return b.puntaje - a.puntaje;
   });
 
-  localStorage.setItem('ranking', JSON.stringify(ranking));
+  sessionStorage.setItem('ranking', JSON.stringify(ranking));
 }
 
 function showRanking(criterio) {
-  var ranking = JSON.parse(localStorage.getItem('ranking')) || [];
+  var ranking = JSON.parse(sessionStorage.getItem('ranking')) || [];
 
   if (criterio === 'fecha') {
     ranking.sort(function(a, b) {

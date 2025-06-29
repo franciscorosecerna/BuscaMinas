@@ -7,6 +7,7 @@
   --color-header: #c0c0c0;
   --color-btn: #0066cc;
   --color-btn-hover: #004d99;
+  --flash-color: #fff176;
 }
 
 body.dark {
@@ -18,6 +19,7 @@ body.dark {
   --color-header: #222222;
   --color-btn: #4da6ff;
   --color-btn-hover: #3399ff;
+  --flash-color: #fbc02d;
 }
 
 * {
@@ -349,4 +351,13 @@ body.dark .github-link img {
   .modal-content {
     padding: 1.5rem;
   }
+}
+
+@keyframes flash {
+  0%   { background-color: var(--flash-color); }
+  50%  { background-color: var(--color-celda); }
+  100% { background-color: var(--flash-color); }
+}
+.cell.flash {
+  animation: flash 0.3s ease-in-out 2;
 }
